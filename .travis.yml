@@ -1,0 +1,12 @@
+dist: trusty
+language: generic
+services: docker
+sudo: false
+os: linux
+
+install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - travis_retry docker build --rm -t sample -f Dockerfile .
+
+script:
+  - ./ci_build.sh Dockerfile sample -it /workspace/test.sh
